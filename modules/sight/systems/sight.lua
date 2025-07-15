@@ -22,6 +22,7 @@ function SightSystem:onSenses(level, actor)
    local sightLimit = sightComponent.range
 
    local actorPos = actor:getPosition()
+   if not actorPos then return end
 
    -- we check if the sight component has a fov and if so we clear it
    if sightComponent.fov then

@@ -9,6 +9,10 @@ function SentryContoller:__new(startingDirection)
    self.rootNode = SentryBehavior
 end
 
+function SentryContoller:getRequirements()
+   return prism.components.Mover
+end
+
 ---@param level Level
 ---@param actor Actor
 function SentryContoller:act(level, actor)

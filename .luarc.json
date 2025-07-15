@@ -16,5 +16,6 @@
         "prism"
     ],
     "completion.autoRequire": false,
-    "type.weakUnionCheck": true
+    "type.weakUnionCheck": true,
+    "type.checkTableShape": true
 }

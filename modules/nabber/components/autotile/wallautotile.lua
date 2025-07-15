@@ -1,10 +1,9 @@
-local AutoTile = require "modules.nabber.components.autotile"
-local Drawable = require "prism.spectrum.components.drawable"
+local Drawable = prism.components.Drawable
 local palette = require "display.palette"
 local default = Drawable(1, nil, palette[25])
 
 --- @class WallAutoTile : AutoTile
-local WallAutoTile = AutoTile:extend("WallAutoTile")
+local WallAutoTile = prism.components.AutoTile:extend("WallAutoTile")
 
 WallAutoTile.id = 4
 WallAutoTile.default = default
@@ -15,7 +14,7 @@ WallAutoTile.drawables = {
    ["bottom-left"] = Drawable(146, palette[25], palette[5]),
    ["bottom-right"] = Drawable(147, palette[25], palette[5]),
    ["top-right"] = Drawable(131, palette[25], palette[5]),
-   ["single"] = Drawable(304, palette[25], palette[5]),
+   ["single"] = Drawable(304, palette[25], palette[6]),
    ["bottom"] = Drawable(257, palette[7], palette[6]),
    ["door-right"] = Drawable(257, palette[7], palette[6]),
 }
@@ -23,13 +22,12 @@ WallAutoTile.drawables = {
 -- stylua: ignore start
 WallAutoTile.rules = {
   {
-    drawable = "top",
+    drawable = "top-right",
     pattern = {
-      0, 0, 0,
-      6, 3, 0,
-      0, 0, 0
-    },
-    mirrorX = true
+      0, 1, 0,
+      2, 3, 1,
+      0, 2, 0
+    }
   },
   {
     drawable = "bottom",
@@ -61,14 +59,6 @@ WallAutoTile.rules = {
       0, 2, 0,
       2, 3, 1,
       0, 1, 0
-    }
-  },
-  {
-    drawable = "top-right",
-    pattern = {
-      0, 1, 0,
-      2, 3, 1,
-      0, 2, 0
     }
   },
   {

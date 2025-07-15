@@ -11,7 +11,7 @@ end
 --- @param level Level
 --- @param targetDoor Actor
 function Open:perform(level, targetDoor)
-   local door = targetDoor:get(prism.components.Door)
+   local door = targetDoor:expect(prism.components.Door)
 
    door.open = true
    targetDoor

@@ -1,10 +1,9 @@
-local AutoTile = require "modules.nabber.components.autotile"
 local palette = require "display.palette"
 local Drawable = prism.components.Drawable
 local default = Drawable(1, nil, palette[17])
 
 --- @class PipeAutoTile : AutoTile
-local PipeAutoTile = AutoTile:extend("PipeAutoTile")
+local PipeAutoTile = prism.components.AutoTile:extend("PipeAutoTile")
 
 PipeAutoTile.id = 6
 PipeAutoTile.default = default

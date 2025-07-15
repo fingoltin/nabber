@@ -1,6 +1,6 @@
 --- @class Attack : Action
 local Attack = prism.Action:extend "Attack"
-Attack.targets = { prism.targets.PushTarget() }
+Attack.targets = { prism.Target(prism.components.Health):isPrototype(prism.Actor) }
 
 function Attack:canPerform()
    return true
@@ -10,21 +10,12 @@ end
 ---@param level Level
 ---@param target Actor
 function Attack:perform(level, target)
-   level:removeActor(target)
-   local x, y = target:getPosition():decompose()
-   local debris = prism.actors.BrokenBox()
-   level:addActor(debris)
-   level:moveActor(debris, prism.Vector2(x, y))
-
-   level
-      :query(prism.components.Collider, prism.components.Controller)
-      :at(5, 8)
-      :each(function(actor, collider, controller)
-         --- @cast collider Collider
-         --- @cast controller Controller
-
-         local act = controller.act
-      end)
+   local health = target:expect(prism.components.Health)
+   health.hp = health.hp - 1
+   if health.hp <= 0 then
+      local die = prism.actions.Die(target)
+      level:perform(die)
+   end
 end
 
 return Attack
