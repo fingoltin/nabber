@@ -5,7 +5,7 @@
 --- @field mirrorY boolean
 
 --- @class AutoTile : Component
---- @field drawables table<string, Drawable[]>
+--- @field drawables table<string, Drawable>
 --- @field default Drawable
 --- @field rules AutoTileRule[]
 --- @field id integer

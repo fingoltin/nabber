@@ -5,7 +5,12 @@ prism.registerActor("Crate", function()
       prism.components.Name("CRATE"),
       prism.components.Position(),
       prism.components.Pushable(),
-      prism.components.Drawable(302, palette[24], palette[6], 3),
+      prism.components.Drawable {
+         index = 302,
+         color = palette[24],
+         background = palette[6],
+         layer = 3,
+      },
       prism.components.Collider(),
       prism.components.Drops(prism.actors.BrokenBox),
       prism.components.Opaque(),
@@ -13,5 +18,6 @@ prism.registerActor("Crate", function()
       prism.components.Inventory(),
       prism.components.Health(1),
       prism.components.Suspicious(true),
+      prism.components.Equipper { "pilot" },
    }
 end)

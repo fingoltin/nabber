@@ -1,6 +1,6 @@
 local Drawable = prism.components.Drawable
 local palette = require "display.palette"
-local default = Drawable(1, nil, palette[25])
+local default = Drawable { index = 1, background = palette[25] }
 
 --- @class WallAutoTile : AutoTile
 local WallAutoTile = prism.components.AutoTile:extend("WallAutoTile")
@@ -10,13 +10,13 @@ WallAutoTile.default = default
 
 WallAutoTile.drawables = {
    ["top"] = default,
-   ["top-left"] = Drawable(130, palette[25], palette[5]),
-   ["bottom-left"] = Drawable(146, palette[25], palette[5]),
-   ["bottom-right"] = Drawable(147, palette[25], palette[5]),
-   ["top-right"] = Drawable(131, palette[25], palette[5]),
-   ["single"] = Drawable(304, palette[25], palette[6]),
-   ["bottom"] = Drawable(257, palette[7], palette[6]),
-   ["door-right"] = Drawable(257, palette[7], palette[6]),
+   ["top-left"] = Drawable { index = 130, color = palette[25], background = palette[5] },
+   ["bottom-left"] = Drawable { index = 146, color = palette[25], background = palette[5] },
+   ["bottom-right"] = Drawable { index = 147, color = palette[25], background = palette[5] },
+   ["top-right"] = Drawable { index = 131, color = palette[25], background = palette[5] },
+   ["single"] = Drawable { index = 304, color = palette[25], background = palette[6] },
+   ["bottom"] = Drawable { index = 257, color = palette[7], background = palette[6] },
+   ["door-right"] = Drawable { index = 257, color = palette[7], background = palette[6] },
 }
 
 -- stylua: ignore start

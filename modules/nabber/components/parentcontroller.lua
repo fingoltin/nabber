@@ -7,8 +7,8 @@ function ParentController:__new(parent)
    self.parent = parent
 end
 
-function ParentController:act(level, actor)
-   return prism.components.PlayerController.act(self, level, actor)
+function ParentController:decide(level, actor, decision)
+   return prism.components.PlayerController.decide(self, level, actor, decision)
 end
 
 return ParentController

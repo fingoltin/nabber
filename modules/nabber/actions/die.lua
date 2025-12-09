@@ -17,11 +17,10 @@ function Die:perform(level)
       level:addActor(droppedActor)
    end
 
-   local parent = self.owner:get(prism.components.ParentController)
-   if parent then
-      local parentActor = parent.parent
-      parentActor:give(prism.components.Position(self.owner:getPosition()))
-      level:addActor(parentActor)
+   if self.owner:hasRelation(prism.relations.Piloted) then
+      local pilot = self.owner:getRelation(prism.relations.Piloted)
+      pilot:give(prism.components.Position(self.owner:getPosition()))
+      level:addActor(pilot)
    end
 
    level:removeActor(self.owner)

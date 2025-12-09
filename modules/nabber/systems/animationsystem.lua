@@ -1,19 +1,19 @@
 local palette = require "display.palette"
 --- @class AnimationSystem : System
---- @field animations Animation[]
+--- @field instances AnimationMessage[]
+--- @field manuals (fun(dt: number): boolean)[]
 local AnimationSystem = prism.System:extend "AnimationSystem"
 
-local anim = require "display.animation"
-
 function AnimationSystem:__new()
-   self.animations = {}
+   self.instances = {}
+   self.manuals = {}
 end
 
 function AnimationSystem:update(dt)
-   for i = #self.animations, 1, -1 do
-      local animation = self.animations[i]
-      animation:update(dt)
-      if animation.status == "paused" then table.remove(self.animations, i) end
+   for i = #self.instances, 1, -1 do
+      local instance = self.instances[i]
+      instance.animation:update(dt)
+      if instance.animation.status == "paused" then table.remove(self.instances, i) end
    end
 
    for _, _, animation in
@@ -34,16 +34,36 @@ function AnimationSystem:draw(display)
       local x, y = position:getVector():decompose()
       local animation = idleAnimation.animation
 
-      animation.frames[animation.position](display, x, y)
+      animation:draw(display, x, y)
    end
 
-   for _, animation in ipairs(self.animations) do
-      animation.frames[animation.position](display)
+   for _, instance in ipairs(self.instances) do
+      local x, y = instance.x, instance.y
+      if instance.actor then
+         local position = instance.actor:expectPosition()
+         x = x and x + position.x or position.x
+         y = y and y + position.y or position.y
+      end
+
+      if not instance.actor or (instance.actor and instance.actor.level) then
+         instance.animation:draw(display, x, y)
+      end
+   end
+
+   for i = #self.manuals, 1, -1 do
+      if self.manuals[i](love.timer.getDelta()) then table.remove(self.manuals, i) end
    end
 end
 
 function AnimationSystem:onYield(level, event)
-   if prism.messages.Animation:is(event) then table.insert(self.animations, event.animation) end
+   if prism.messages.Animation:is(event) then
+      --- @cast event AnimationMessage
+      if type(event.animation) == "function" then
+         table.insert(self.manuals, event.animation)
+      else
+         table.insert(self.instances, event)
+      end
+   end
 end
 
 return AnimationSystem

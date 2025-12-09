@@ -1,16 +1,16 @@
 local Drawable = require "prism.spectrum.components.drawable"
 local palette = require "display.palette"
-local default = Drawable(1, palette[17])
+local default = Drawable { index = 1, color = palette[17] }
 
 --- @class PipeDecorAutoTile : AutoTile
 local PipeDecorAutoTile = prism.components.AutoTile:extend("PipeDecorAutoTile")
 
-PipeDecorAutoTile.id = 7
+PipeDecorAutoTile.id = 8
 PipeDecorAutoTile.default = default
 
 PipeDecorAutoTile.drawables = {
-   ["top-right"] = Drawable(140, palette[17]),
-   ["top-left"] = Drawable(138, palette[17]),
+   ["top-right"] = Drawable { index = 140, color = palette[17] },
+   ["top-left"] = Drawable { index = 138, color = palette[17] },
 }
 
 -- stylua: ignore start

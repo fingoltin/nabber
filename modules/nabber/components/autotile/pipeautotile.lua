@@ -1,23 +1,23 @@
 local palette = require "display.palette"
 local Drawable = prism.components.Drawable
-local default = Drawable(1, nil, palette[17])
+local default = Drawable { index = 1, background = palette[17] }
 
 --- @class PipeAutoTile : AutoTile
 local PipeAutoTile = prism.components.AutoTile:extend("PipeAutoTile")
 
-PipeAutoTile.id = 6
+PipeAutoTile.id = 9
 PipeAutoTile.default = default
 
 PipeAutoTile.drawables = {
    ["top"] = default,
-   ["top-left"] = Drawable(130, palette[17], palette[5]),
-   ["bottom-left"] = Drawable(146, palette[17], palette[5]),
-   ["bottom-right"] = Drawable(147, palette[17], palette[5]),
-   ["top-right"] = Drawable(131, palette[17], palette[5]),
-   ["single"] = Drawable(304, palette[17], palette[5]),
-   ["bottom"] = Drawable(239, palette[17], palette[6]),
-   ["middle"] = Drawable(159, palette[6], palette[17]),
-   ["wall"] = Drawable(1, nil, palette[25]),
+   ["top-left"] = Drawable { index = 130, color = palette[17], background = palette[5] },
+   ["bottom-left"] = Drawable { index = 146, color = palette[17], background = palette[5] },
+   ["bottom-right"] = Drawable { index = 147, color = palette[17], background = palette[5] },
+   ["top-right"] = Drawable { index = 131, color = palette[17], background = palette[5] },
+   ["single"] = Drawable { index = 304, color = palette[17], background = palette[5] },
+   ["bottom"] = Drawable { index = 239, color = palette[17], background = palette[6] },
+   ["middle"] = Drawable { index = 159, color = palette[6], background = palette[17] },
+   ["wall"] = Drawable { index = 1, background = palette[25] },
 }
 
 -- stylua: ignore start

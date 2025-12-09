@@ -8,16 +8,6 @@ Spot.targets = {
    prism.Target():isType("boolean"):optional(),
 }
 
---- @param actor Actor
-local animFactory = function(actor)
-   return anim.newAnimation({
-      function(display)
-         local position = actor:expectPosition()
-         display:put(position.x, position.y - 1, 34, palette[22], palette[6], 2)
-      end,
-   }, { 1 }, "pauseAtEnd")
-end
-
 --- @param level Level
 --- @param actor Actor
 --- @param force? boolean
@@ -27,8 +17,13 @@ end
 
 function Spot:perform(level, actor)
    self.owner:expect(prism.components.Alarm).target = actor
-   level:yield(prism.messages.Animation(animFactory(self.owner)))
-   level:yield(prism.messages.Interrupt())
+   level:yield(prism.messages.InterruptMessage())
+   level:yield(prism.messages.AnimationMessage {
+      animation = spectrum.animations.Exclamation(),
+      actor = self.owner,
+      y = -1,
+      blocking = true,
+   })
 end
 
 return Spot

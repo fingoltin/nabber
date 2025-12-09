@@ -5,6 +5,6 @@ prism.registerActor("BrokenBox", function()
       prism.components.Name("DEBRIS"),
       prism.components.Position(),
       prism.components.Collider({ allowedMovetypes = { "walk" } }),
-      prism.components.Drawable(38, palette[23], palette[6]),
+      prism.components.Drawable { index = 38, color = palette[23], background = palette[6] },
    }
 end)

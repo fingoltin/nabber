@@ -4,14 +4,43 @@ local Drawable = prism.components.Drawable
 --- @class FloorAutoTile : AutoTile
 local FloorAutoTile = prism.components.AutoTile:extend("FloorAutoTile")
 
-FloorAutoTile.default = Drawable(271, palette[5], palette[6])
+FloorAutoTile.default = Drawable { index = 271, color = palette[5], background = palette[6] }
 FloorAutoTile.id = 5
 FloorAutoTile.drawables = {
-   ["bridge"] = Drawable(257, palette[4], palette[5]),
-   ["bridge-v"] = Drawable(258, palette[4], palette[5]),
+   ["bridge"] = Drawable { index = 257, color = palette[4], background = palette[5] },
+   ["bridge-v"] = Drawable { index = 258, color = palette[4], background = palette[5] },
+   ["bridge-m"] = Drawable { index = 277, color = palette[4], background = palette[5] },
 }
 -- stylua: ignore start
 FloorAutoTile.rules = {
+   {
+      drawable = "bridge-m",
+      pattern = {
+         0,6,0,
+         6,3,6,
+         0,6,0
+      },
+   },
+   {
+      drawable = "bridge-m",
+      pattern = {
+         0,2,0,
+         2,3,2,
+         0,6,0
+      },
+      mirrorY = true,
+      mirrorX = true
+   },
+   {
+      drawable = "bridge-m",
+      pattern = {
+         0,2,0,
+         2,3,0,
+         0,6,0
+      },
+      mirrorY = true,
+      mirrorX = true
+   },
    {
       drawable = "bridge",
       pattern = {

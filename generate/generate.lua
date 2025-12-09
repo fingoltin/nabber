@@ -4,8 +4,9 @@ local PARTITIONS = 2
 --- @param player Actor
 --- @param width integer
 --- @param height integer
+--- @return LevelBuilder
 return function(rng, player, width, height)
-   local builder = prism.MapBuilder(prism.cells.Wall)
+   local builder = prism.LevelBuilder(prism.cells.Wall)
 
    -- Fill the map with random noise of pits and walls.
    local nox, noy = rng:getUniformInt(1, 10000), rng:getUniformInt(1, 10000)
@@ -36,8 +37,8 @@ return function(rng, player, width, height)
          local roomRect = prism.Rectangle(x, y, rw, rh)
          rooms[prism.Vector2._hash(px, py)] = roomRect
 
-         builder:drawRectangle(x, y, x + rw, y + rh, prism.cells.Wall)
-         builder:drawRectangle(x + 1, y + 2, x + rw - 1, y + rh - 1, prism.cells.Floor)
+         builder:rectangle("fill", x, y, x + rw, y + rh, prism.cells.Wall)
+         builder:rectangle("fill", x + 1, y + 2, x + rw - 1, y + rh - 1, prism.cells.Floor)
       end
    end
 
@@ -51,11 +52,11 @@ return function(rng, player, width, height)
       local bx, by = b:center():floor():decompose()
       -- Randomly choose one of two L-shaped tunnel patterns for variety.
       if rng:getUniform() > 0.5 then
-         builder:drawLine(ax, ay, bx, ay, prism.cells.Floor)
-         builder:drawLine(bx, ay, bx, by, prism.cells.Floor)
+         builder:line(ax, ay, bx, ay, prism.cells.Floor)
+         builder:line(bx, ay, bx, by, prism.cells.Floor)
       else
-         builder:drawLine(ax, ay, ax, by, prism.cells.Floor)
-         builder:drawLine(ax, by, bx, by, prism.cells.Floor)
+         builder:line(ax, ay, ax, by, prism.cells.Floor)
+         builder:line(ax, by, bx, by, prism.cells.Floor)
       end
    end
 
@@ -94,7 +95,7 @@ return function(rng, player, width, height)
       end
    end
 
-   builder:addPadding(1, prism.cells.Pit)
+   builder:pad(1, prism.cells.Pit)
 
    --- @type Rectangle[]
    local availableRooms = {}

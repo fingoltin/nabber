@@ -1,23 +1,24 @@
 require "debugger"
 require "prism"
 
+love.graphics.setDefaultFilter("nearest", "nearest")
+
 prism.loadModule("prism/spectrum")
+prism.loadModule("prism/geometer")
 prism.loadModule("prism/extra/sight")
 prism.loadModule("prism/extra/inventory")
 prism.loadModule("modules/autotile")
+prism.loadModule("prism/extra/condition")
+prism.loadModule("modules/equipment")
+prism.loadModule("modules/base")
 prism.loadModule("modules/nabber")
 
 love.graphics.setBackgroundColor(require("display.palette")[17]:decompose())
-love.graphics.setDefaultFilter("nearest", "nearest")
 love.keyboard.setKeyRepeat(true)
-
-local utf8 = require "utf8"
-print(utf8.codepoint("⇒"))
 
 prism.logger.setOptions({ level = "trace" })
 
 -- Grab our level state and sprite atlas.
-local GameLevelState = require "gamestates.gamelevelstate"
 
 -- Load a sprite atlas and configure the terminal-style display,
 local spriteAtlas = spectrum.SpriteAtlas.fromASCIIGrid("display/tileset.png", 8, 8)
@@ -31,6 +32,7 @@ local manager = spectrum.StateManager()
 -- we put out levelstate on top here, but you could create a main menu
 --- @diagnostic disable-next-line
 function love.load()
-   manager:push(GameLevelState(display, overlay))
+   manager:push(spectrum.gamestates.GameLevelState(display, overlay))
    manager:hook()
+   spectrum.Input:hook()
 end

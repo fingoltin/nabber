@@ -72,9 +72,7 @@ SentryBehavior.children = {
       else
          return prism.actions.Wait(actor)
       end
-   end),
+   end)
 }
-
-prism.behaviors.Sentry = SentryBehavior
 
 return SentryBehavior

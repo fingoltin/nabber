@@ -12,21 +12,21 @@ function AlarmSystem:onMove(level, actor, from, to)
    if actor:has(prism.components.Suspicious) then
       for alarm, _, senses in level:query(prism.components.Alarm, prism.components.Senses):iter() do
          -- We want to update what the alarm sees before it moves.
-         level:getSystem(prism.systems.Senses):triggerRebuild(level, alarm)
+         level:getSystem(prism.systems.SensesSystem):triggerRebuild(level, alarm)
          --- @cast senses Senses
-         if senses.actors:hasActor(actor) then
+         if alarm:hasRelation(prism.relations.SensesRelation, actor) then
             local action = prism.actions.Spot(alarm, actor)
             if level:canPerform(action) then level:perform(action) end
          end
       end
    -- An alarm moved. Suspicious actors with onlyWhenMoving are not spotted.
    elseif actor:has(prism.components.Alarm) then
-      level:getSystem(prism.systems.Senses):triggerRebuild(level, actor)
+      level:getSystem(prism.systems.SensesSystem):triggerRebuild(level, actor)
 
       local senses = actor:get(prism.components.Senses)
       if not senses then return end
 
-      for other, suspicious in senses.actors:query(prism.components.Suspicious):iter() do
+      for other, suspicious in senses:query(level, prism.components.Suspicious):iter() do
          --- @cast suspicious Suspicious
          print(suspicious.onlyWhenMoving)
          if not suspicious.onlyWhenMoving then

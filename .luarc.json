@@ -13,7 +13,17 @@
         "geometer"
     ],
     "Lua.workspace.library": [
-        "prism"
+        "prism/engine",
+	"prism/spectrum",
+	"prism/geometer",
+	"prism/extra/inventory",
+	"prism/extra/sight",
+	"prism/extra/condition",
+	"definitions"
+    ],
+    "diagnostics.ignoredFiles": "Disable",
+    "Lua.workspace.ignoreDir": [
+        "prism/extra/equipment/"
     ],
     "completion.autoRequire": false,
     "type.weakUnionCheck": true,
