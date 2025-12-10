@@ -247,6 +247,16 @@ function GameLevelState:putOverlay()
    local coin = inventory:getStack("coin")
    local count = coin and coin:expect(prism.components.Item).stackCount or 0
    self.overlay:put(12, 23, 49 + count, palette[22], palette[6])
+
+   self.overlay:print(15, 23, "SHFT")
+   self.overlay:print(15, 25, "CTRL")
+   self.overlay:put(19, 23, 162, palette[6], palette[self.background])
+   self.overlay:put(20, 23, 32, palette[controls.pull.down and 20 or 7], palette[6])
+   self.overlay:put(21, 23, 163, palette[6], palette[self.background])
+
+   self.overlay:put(19, 25, 162, palette[6], palette[self.background])
+   self.overlay:put(20, 25, 355, palette[controls.attack.down and 10 or 8], palette[6])
+   self.overlay:put(21, 25, 163, palette[6], palette[self.background])
 end
 
 local leftBorder = love.graphics.newImage("display/left-border.png")
@@ -362,7 +372,7 @@ end
 function GameLevelState:performOn(position, direction, owner)
    self.mouseActive = false
 
-   if love.keyboard.isDown("lshift") then
+   if controls.pull.down then
       local actorPosition = (direction * -1) + owner:getPosition()
       local actor =
          self.level:query(prism.components.Pushable):at(actorPosition:decompose()):first()
@@ -372,7 +382,7 @@ function GameLevelState:performOn(position, direction, owner)
 
    local collidable = self.level:query(prism.components.Collider):at(position:decompose()):first()
 
-   if love.keyboard.isDown("lctrl") then
+   if controls.attack.down then
       local attack = prism.actions.Attack(owner, collidable)
       if self.level:canPerform(attack) then return attack end
    end

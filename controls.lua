@@ -15,6 +15,8 @@ return spectrum.Input.Controls {
       move_down      = { "s", "j", "axis:lefty-" },
       move_downright = { "c", "n" },
       select_path    = { "mouse:1" },
+      pull           = { "rshift", "lshift" },
+      attack           = { "lctrl", "rctrl" },
       pickup         = "p",
       hide           = "o",
       back           = "backspace",
