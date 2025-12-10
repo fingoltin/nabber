@@ -45,20 +45,10 @@ function GameLevelState:__new(display, overlay)
    self.mouseActive = false
 end
 
-function GameLevelState:getPlayer()
-   local currentActor = self:getCurrentActor()
-   if currentActor and currentActor:has(prism.components.ParentController) then
-      return currentActor:expect(prism.components.ParentController).parent
-   end
-
-   return currentActor
-end
-
 function GameLevelState:handleMessage(message)
    self.super.handleMessage(self, message)
 
    if prism.messages.InterruptMessage:is(message) then
-      print("hey")
       self.selectedPath = nil
       self.path = nil
    end
@@ -107,6 +97,15 @@ function GameLevelState:updateDecision(dt, owner, decision)
    end
 
    if self.selectedPath then return end
+
+   if controls.select_path.pressed then
+      if cell and self.path then
+         self.mouseActive = false
+         self.selectedPath = self.path
+         print("hey man")
+      end
+      return
+   end
 
    if controls.restart.pressed then love.event.restart() end
 
@@ -349,17 +348,6 @@ function GameLevelState:drawPath()
          self.display.cells[position.x + self.display.camera.x][position.y + self.display.camera.y].fg =
             palette[20]:copy()
       end
-   end
-end
-
-function GameLevelState:mousepressed(x, y, button, istouch, presses)
-   local _, _, cell = self:getCellUnderMouse()
-
-   if not cell then return end
-
-   if self.path then
-      self.mouseActive = false
-      self.selectedPath = self.path
    end
 end
 

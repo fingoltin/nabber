@@ -40,13 +40,14 @@ end
 function AlarmSystem:afterAction(level, actor, action)
    if not prism.actions.Hide:is(action) then return end
 
+   prism.logger.debug(actor:getName(), "is hiding")
+
    --- @cast action Hide
    for sentry, alarm in level:query(prism.components.Alarm):iter() do
       --- @cast alarm Alarm
       if alarm.target == actor then
-         local spot = prism.actions.Spot(sentry, action:getTarget(1), true)
-         local can, error = level:canPerform(spot)
-         if can then level:perform(spot) end
+         local spot = prism.actions.Spot(sentry, action:getTargeted(1), true)
+         prism.logger.warn(level:tryPerform(spot))
       end
    end
 end

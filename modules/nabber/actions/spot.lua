@@ -4,7 +4,7 @@ local palette = require "display.palette"
 local Spot = prism.Action:extend "Spot"
 Spot.requiredComponents = { prism.components.Alarm, prism.components.Senses }
 Spot.targets = {
-   prism.Target(prism.components.Suspicious):isPrototype(prism.Actor):sensed(),
+   prism.Target(prism.components.Suspicious):isActor(),
    prism.Target():isType("boolean"):optional(),
 }
 
@@ -12,7 +12,9 @@ Spot.targets = {
 --- @param actor Actor
 --- @param force? boolean
 function Spot:canPerform(level, actor, force)
-   return force and true or self.owner:expect(prism.components.Alarm).target == nil
+   if force then return true end
+   return self.owner:expect(prism.components.Alarm).target == nil
+      and self.owner:hasRelation(prism.relations.SensesRelation, actor)
 end
 
 function Spot:perform(level, actor)
