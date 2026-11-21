@@ -1,3 +1,4 @@
+local palette = require "display.palette"
 local HackTarget = prism.Target(prism.components.Hackable)
 
 --- @class Hack : Action
@@ -13,6 +14,12 @@ end
 --- @param hackableObject Actor
 function Hack:perform(level, hackableObject)
    local hackable = hackableObject:expect(prism.components.Hackable)
+   local drawable = hackableObject:expect(prism.components.Drawable)
+   if hackable.on then
+      drawable.color = palette[12]
+   else
+      drawable.color = palette[15]
+   end
    level:query(prism.components.Door):each(function(door, c)
       if hackable.on then
          local open = prism.actions.Open(hackableObject, door)

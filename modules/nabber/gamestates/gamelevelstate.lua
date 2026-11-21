@@ -387,6 +387,9 @@ function GameLevelState:performOn(position, direction, owner)
       if self.level:canPerform(attack) then return attack end
    end
 
+   local hack = prism.actions.Hack(owner, collidable)
+   if self.level:canPerform(hack) then return hack end
+
    local move = prism.actions.Move(owner, position)
    if self.level:canPerform(move) then return move end
 
